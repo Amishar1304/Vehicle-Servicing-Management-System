@@ -1,0 +1,5 @@
+package com.bit.VehicleServiceManagementSystem.Repository;
+
+public class VehicleAssignmentRepo {
+
+}

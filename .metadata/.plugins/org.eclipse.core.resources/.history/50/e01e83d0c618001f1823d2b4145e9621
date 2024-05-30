@@ -1,0 +1,5 @@
+package com.bit.VehicleServiceManagementSystem.entity;
+
+public class VehicleAssignment {
+
+}

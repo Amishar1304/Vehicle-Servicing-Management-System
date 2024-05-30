@@ -1,0 +1,98 @@
+package com.bit.VehicleServiceManagementSystem.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Entity
+//@Getter
+//@Setter
+//@Data
+//@Table
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "customer_id")
+    private Long customer_id;
+
+    private String customerName;
+
+    private Long customerContact;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "serviceCenter_id")
+    @JsonBackReference
+    private ServiceCenter serviceCenter;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "customer")
+    @JsonManagedReference
+    private List<Vehicle> vehicles;
+
+	public Customer() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Customer(Long customer_id, String customerName, Long customerContact, ServiceCenter serviceCenter,
+			List<Vehicle> vehicles) {
+		super();
+		this.customer_id = customer_id;
+		this.customerName = customerName;
+		this.customerContact = customerContact;
+		this.serviceCenter = serviceCenter;
+		this.vehicles = vehicles;
+	}
+
+	public Long getCustomer_id() {
+		return customer_id;
+	}
+
+	public void setCustomer_id(Long customer_id) {
+		this.customer_id = customer_id;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public Long getCustomerContact() {
+		return customerContact;
+	}
+
+	public void setCustomerContact(Long customerContact) {
+		this.customerContact = customerContact;
+	}
+
+	public ServiceCenter getServiceCenter() {
+		return serviceCenter;
+	}
+
+	public void setServiceCenter(ServiceCenter serviceCenter) {
+		this.serviceCenter = serviceCenter;
+	}
+
+	public List<Vehicle> getVehicles() {
+		return vehicles;
+	}
+
+	public void setVehicles(List<Vehicle> vehicles) {
+		this.vehicles = vehicles;
+	}
+    
+    
+
+//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "customer")
+//    @JsonManagedReference
+//    private List<CustomerQuery> customerQueries;
+}

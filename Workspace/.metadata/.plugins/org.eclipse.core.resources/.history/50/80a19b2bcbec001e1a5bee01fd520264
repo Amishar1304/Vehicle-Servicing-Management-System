@@ -1,0 +1,38 @@
+package com.bit.VehicleServiceManagementSystem.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Entity
+//@Getter
+//@Setter
+//@Data
+//@Table
+public class Vehicle {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "vehicle_id")
+    private Long vehicle_id;
+
+    private String vehicleType;
+    private String vehicleRegNo;
+    private boolean hasPolicy;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    @JsonBackReference
+    private Customer customer;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "vehicle")
+    @JsonManagedReference
+    private List<ServiceRecord> serviceRecords;
+
+
+}

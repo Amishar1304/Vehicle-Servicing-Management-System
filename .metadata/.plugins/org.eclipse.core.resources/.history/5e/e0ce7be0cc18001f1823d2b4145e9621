@@ -1,0 +1,47 @@
+package com.bit.VehicleServiceManagementSystem.controller;
+
+import java.util.List;
+
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bit.VehicleServiceManagementSystem.Repository.VehicleAssignmentRepo;
+import com.bit.VehicleServiceManagementSystem.entity.VehicleAssignment;
+
+import jakarta.persistence.EntityManager;
+
+@RestController
+@RequestMapping("/VehicleAssigned")
+public class VehicleAssignmentController {
+	 @Autowired
+	    private VehicleAssignmentRepo assignmentRepository;
+	 
+	 @Autowired
+	    private EntityManager entityManager; // Inject the entity manager
+
+	    @GetMapping("/getAll")
+	    public List<VehicleAssignment> getAllAssignments() {
+	        // Initialize the necessary associations before returning
+	        List<VehicleAssignment> assignments = assignmentRepository.findAll();
+	        assignments.forEach(this::initializeAssociations);
+	        return assignments;
+	    }
+
+	    @PostMapping("/save")
+	    public VehicleAssignment assignVehicleToTechnician(@RequestBody VehicleAssignment assignment) {
+	        return assignmentRepository.save(assignment);
+	    }
+
+	    // Helper method to initialize associations
+	    private void initializeAssociations(VehicleAssignment assignment) {
+	        // Initialize vehicle and technician associations
+	        Hibernate.initialize(assignment.getVehicle());
+	        Hibernate.initialize(assignment.getTechnician());
+	    }
+
+}

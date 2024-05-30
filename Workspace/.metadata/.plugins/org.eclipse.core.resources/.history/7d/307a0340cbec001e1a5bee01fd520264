@@ -1,0 +1,39 @@
+package com.bit.VehicleServiceManagementSystem.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
+
+@Entity
+//@Data
+//@Setter
+//@Getter
+//@Table
+public class ServiceRecord {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "serviceRecord_id")
+    private Long serviceRecord_id;
+
+    private Date date;
+    private boolean isPayment;
+    private Integer serviceAmount;
+    private boolean isOilChange;
+    private boolean isWashing;
+    private String otherAmenities;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id")
+    @JsonBackReference
+    private Vehicle vehicle;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "serviceCenter_id")
+//    @JsonBackReference
+//    private ServiceCenter serviceCenter;
+}

@@ -1,0 +1,114 @@
+package com.bit.VehicleServiceManagementSystem.entity;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Entity
+//@Getter
+//@Setter
+@Transactional
+//@Data
+//@Table
+public class ServiceCenter {
+    //hey this is Deepak
+    //changes after creating local branch
+    //
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "serviceCenter_id")
+    private Long serviceCenter_id;
+
+    private String serviceCenterName;
+    private String serviceCenterAddress;
+    private Long ServiceCenterContact;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "serviceCenter")
+    @JsonManagedReference
+    private List<Customer> customers;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "serviceCenter")
+    @JsonManagedReference
+    private List<Technician> technicians;
+
+	public ServiceCenter() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ServiceCenter(Long serviceCenter_id, String serviceCenterName, String serviceCenterAddress,
+			Long serviceCenterContact, List<Customer> customers, List<Technician> technicians) {
+		super();
+		this.serviceCenter_id = serviceCenter_id;
+		this.serviceCenterName = serviceCenterName;
+		this.serviceCenterAddress = serviceCenterAddress;
+		ServiceCenterContact = serviceCenterContact;
+		this.customers = customers;
+		this.technicians = technicians;
+	}
+
+	public Long getServiceCenter_id() {
+		return serviceCenter_id;
+	}
+
+	public void setServiceCenter_id(Long serviceCenter_id) {
+		this.serviceCenter_id = serviceCenter_id;
+	}
+
+	public String getServiceCenterName() {
+		return serviceCenterName;
+	}
+
+	public void setServiceCenterName(String serviceCenterName) {
+		this.serviceCenterName = serviceCenterName;
+	}
+
+	public String getServiceCenterAddress() {
+		return serviceCenterAddress;
+	}
+
+	public void setServiceCenterAddress(String serviceCenterAddress) {
+		this.serviceCenterAddress = serviceCenterAddress;
+	}
+
+	public Long getServiceCenterContact() {
+		return ServiceCenterContact;
+	}
+
+	public void setServiceCenterContact(Long serviceCenterContact) {
+		ServiceCenterContact = serviceCenterContact;
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
+	public List<Technician> getTechnicians() {
+		return technicians;
+	}
+
+	public void setTechnicians(List<Technician> technicians) {
+		this.technicians = technicians;
+	}
+    
+    
+//
+//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "serviceCenter" )
+//    @JsonManagedReference
+//    private List<CustomerQuery> customerQueries;
+//
+//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "serviceCenter")
+//    @JsonManagedReference
+//    private List<ServiceRecord> serviceRecords;
+
+}
